@@ -339,7 +339,11 @@ def labour(year=None):
     return datetime.date(october_first.year, 10, (8 - weekday_seq)%7)
 
 
-
+def public_holidays(year):
+    year = year if year else _year
+    return [anzac(year), australia(year), *easter(year), newyear(year), christmas(year),
+                       boxing(year), queen(year), labour(year)]
+    
 def ispublic(date_):
 
     if type(date_) == datetime.date:
@@ -349,10 +353,8 @@ def ispublic(date_):
     else:
         date_ = parse(date_)
     year = date_.year
-    public_holidays = [anzac(year), australia(year), *easter(year), newyear(year), christmas(year),
-                       boxing(year), queen(year), labour(year)]
 
-    return (date_ in public_holidays)
+    return (date_ in public_holidays(year))
     
 if __name__ == '__main__':
     # _time_filter('2015-01-03')

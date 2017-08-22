@@ -1,37 +1,29 @@
-#!/usr/bin/env python
-# encoding: utf-8
-
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-import pytime
 
 here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+
+import pytimeNSW
 setup(
-    name='pytime',
-    version=pytime.__version__,
-    description='A easy-use module to operate datetime by string',
+    name='pytimeNSW',
+    version=pytimeNSW.__version__,
+    description='PyTime fork for NSW, Australia',
     long_description=long_description,
-    url='https://github.com/shinux/PyTime',
-    author='Sinux',
-    author_email='nsinux@gmail.com',
+    url='https://github.com/MatthewBurke1995/PyTimeNSW',
+    author='Matthew Burke',
+    author_email='mperoburke@gmail.com',
     license='MIT',
-    keywords='datetime time datetime timeparser',
+    keywords='datetime time datetime timeparser Australia NSW holiday',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     package_data={'': ['README.md']},
-    tests_require=['coverage'],
-    extras_require={
-        'coveralls': ['coveralls']
-    },
     include_package_data=True,
     classifiers=[
-        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -45,3 +37,4 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
     ],
 )
+
