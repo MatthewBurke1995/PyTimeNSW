@@ -2,12 +2,12 @@
 # encoding: utf-8
 
 """
-    pytime
+    pytimeNSW
     ~~~~~~~~~~~~~
 
     A easy-use module to solve the datetime needs by string.
 
-    :copyright: (c) 2015 by Sinux <nsinux@gmail.com>
+    :copyright: (c) 2017 by Matthew Burke <mperoburke@gmail.com>
     :license: MIT, see LICENSE for more details.
 """
 
@@ -252,8 +252,8 @@ def christmas(year=None):
     return datetime.date(int(year), 12, 25) if year else datetime.date(_year, 12, 25)
 
 
-def christeve(year=None):
-    return yesterday(christmas(year))
+def boxing(year=None):
+    return tomorrow(christmas(year))
 
 
 def mother(year=None):
@@ -269,20 +269,25 @@ def mother(year=None):
 
 def father(year=None):
     """
-    the 3rd Sunday in June
+    the 1st Sunday in September
     :param year: int
     :return: Father's day
     """
-    june_first = datetime.date(_year, 6, 1) if not year else datetime.date(int(year), 6, 1)
-    weekday_seq = june_first.weekday()
-    return datetime.date(june_first.year, 6, (21 - weekday_seq))
+    september_first = datetime.date(_year, 9, 1) if not year else datetime.date(int(year), 9, 1)
+    weekday_seq = september_first.weekday()
+    return datetime.date(september_first.year, 9, (7 - weekday_seq))
 
 
 def halloween(year=None):
     return lastday(month=10) if not year else lastday(year, 10)
 
+def goodfri(year=None):
+    return yesterday(eastersat(year))
 
-def easter(year=None):
+def eastersat(year=None):
+    return yesterday(eastersun(year))
+
+def eastersun(year=None):
     """
     1900 - 2099 limit
     :param year: int
@@ -301,22 +306,54 @@ def easter(year=None):
     else:
         return datetime.date(y, 3, (31 + d))
 
+def eastermon(year=None):
+    return tomorrow(eastersun(year))
 
-def thanks(year=None):
+def easter(year=None):
+	return goodfri(year), eastersat(year), eastersun(year), eastermon(year)
+
+def anzac(year=None):
+    return datetime.date(int(year), 4, 25) if year else datetime.date(_year, 4, 25)
+
+def australia(year=None):
+    return datetime.date(int(year), 1, 26) if year else datetime.date(_year, 1, 26)
+
+def queen(year=None): #check later 
     """
-    4rd Thursday in Nov
+    the 2nd Monday in June
     :param year: int
-    :return: Thanksgiving Day
+    :return: Father's day
     """
-    nov_first = datetime.date(_year, 11, 1) if not year else datetime.date(int(year), 11, 1)
-    weekday_seq = nov_first.weekday()
-    if weekday_seq > 3:
-        current_day = 32 - weekday_seq
+    june_eight = datetime.date(_year, 6, 8) if not year else datetime.date(int(year), 6, 8)
+    weekday_seq = june_eight.weekday()
+    return datetime.date(june_eight.year, 6, 7 + (8 - weekday_seq)%7)
+
+def labour(year=None):
+    """
+    the 1st Monday in October
+    :param year: int
+    :return: Father's day
+    """
+    october_first = datetime.date(_year, 10, 1) if not year else datetime.date(int(year), 10, 1)
+    weekday_seq = october_first.weekday()
+    return datetime.date(october_first.year, 10, (8 - weekday_seq)%7)
+
+
+
+def ispublic(date_):
+
+    if type(date_) == datetime.date:
+        pass
+    elif type(date_time) == datetime.datetime:
+        date_ = date_.date()
     else:
-        current_day = 25 - weekday_seq
-    return datetime.date(nov_first.year, 11, current_day)
+        date_ = parse(date_)
+    year = date_.year
+    public_holidays = [anzac(year), australia(year), *easter(year), newyear(year), christmas(year),
+                       boxing(year), queen(year), labour(year)]
 
-
+    return (date_ in public_holidays)
+    
 if __name__ == '__main__':
     # _time_filter('2015-01-03')
     # print(calendar.monthrange(2015, 10))

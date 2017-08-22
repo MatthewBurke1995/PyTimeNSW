@@ -47,8 +47,6 @@ class TestPyTime(unittest.TestCase):
         self.assertTrue(this12)
         this13 = pytime.parse('2015517 23:23:23') == datetime.datetime(2015, 5, 17, 23, 23, 23)
         self.assertTrue(this13)
-        this14 = pytime.parse(1420041600 + gmt8offset) == datetime.datetime(2015, 1, 1, 0, 0, 0)
-        self.assertTrue(this14)
 
     def test_count(self):
         self.assertEqual(pytime.count('2015517', '2015519'), datetime.timedelta(-2))
@@ -150,7 +148,7 @@ class TestPyTime(unittest.TestCase):
         self.assertTrue(this10)
         this11 = pytime.eastersun(2007) == datetime.date(2007, 4, 8)
         self.assertTrue(this11)
-        this12 = pytime.eastersun(2007) == datetime.date(2007, 4, 9)
+        this12 = pytime.eastermon(2007) == datetime.date(2007, 4, 9)
         self.assertTrue(this12)
         this13 = pytime.anzac(2006) == datetime.date(2006, 4, 25)
         self.assertTrue(this13)
@@ -158,10 +156,19 @@ class TestPyTime(unittest.TestCase):
         self.assertTrue(this14)
         this15 = pytime.queen(2018) == datetime.date(2018, 6, 11)
         self.assertTrue(this15)
+
+        this19 = pytime.queen(2015) == datetime.date(2015, 6, 8)
+        self.assertTrue(this19)
+
         this16 = pytime.labour(2017) == datetime.date(2017, 10, 2)
         self.assertTrue(this16)
         this17 = pytime.labour(2018) == datetime.date(2018, 10, 1)
         self.assertTrue(this17)
+
+        this18 = pytime.ispublic(datetime.date(2018, 10, 1))
+        self.assertTrue(this18)
+
+
 
     def test_from_str(self):
         self.assertRaises(exception.CanNotFormatError, pytime.parse, 'App.19st,2015')
