@@ -6,6 +6,14 @@ PyTimeNSW is a fork of [PyTime](https://github.com/shnode/PyTime) with additiona
 ```python
 pip install pytimeNSW
 ```
+
+## To Do List
+1. Add family_day public holiday for Canberra
+2. Add is_public_can and public_holidays_can functions for Canberra
+3. Add is_weekend function takes string or datimeTime and returns Boolean
+4. Add 'Monday rollover' for public holidays that land on a weekend
+5. Add days_until that accepts public holiday name as argument and returns int.
+
 ## Basic Usage
 
 ```python
@@ -56,3 +64,4 @@ True
 ## License
 
 MIT
+
