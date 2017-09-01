@@ -237,7 +237,14 @@ def next_month(arg=_date, clean=False):
 
 
 def newyear(year=None):
-    return datetime.date(int(year), 1, 1) if year else datetime.date(_year, 1, 1)
+
+    january_first = datetime.date(int(year), 1, 1) if year else datetime.date(_year, 1, 1)
+    weekday_seq = january_first.weekday()
+
+    if is_weekend(january_first):
+        return datetime.date(january_first.year, 1, (8 - weekday_seq)%7)
+    else:
+        return january_first
 
 
 def valentine(year=None):
@@ -249,11 +256,17 @@ def fool(year=None):
 
 
 def christmas(year=None):
-    return datetime.date(int(year), 12, 25) if year else datetime.date(_year, 12, 25)
+    december_25 = datetime.date(int(year), 12, 25) if year else datetime.date(_year, 12, 25)
+    weekday_seq = december_25.weekday()
+
+    if is_weekend(december_25):
+        return datetime.date(december_25.year, 12, 27)
+    else:
+        return december_25
 
 
 def boxing(year=None):
-    return tomorrow(christmas(year))
+    return datetime.date(int(year), 12, 26) if year else datetime.date(_year, 12, 26)
 
 
 def mother(year=None):
@@ -322,7 +335,7 @@ def queen(year=None): #check later
     """
     the 2nd Monday in June
     :param year: int
-    :return: Father's day
+    :return: Queen's birthday
     """
     june_eight = datetime.date(_year, 6, 8) if not year else datetime.date(int(year), 6, 8)
     weekday_seq = june_eight.weekday()
@@ -338,24 +351,80 @@ def labour(year=None):
     weekday_seq = october_first.weekday()
     return datetime.date(october_first.year, 10, (8 - weekday_seq)%7)
 
+def family(year=None):
+    year = year if year else _year
+    family_day = {2011: datetime.date(2011,10,10), 2012: datetime.date(2012,10,8), 2013: datetime.date(2013,9,30), 
+                  2014: datetime.date(2014,9,29), 2015: datetime.date(2015,9,28), 2016: datetime.date(2016,9,26), 
+                  2017: datetime.date(2017,9,25), 2018: datetime.date(2018,10,8), 2019: datetime.date(2019,9,30) }
+    return family_day.get(year)
+
+def canberra(year=None):
+    """
+    the 2nd monday of March
+    :param year: int
+    :return: Canberra day
+    """
+    march_eight = datetime.date(year, 3, 8) if not year else datetime.date(int(year), 3, 8)
+    weekday_seq = march_eight.weekday()
+    return datetime.date(march_eight.year, 3, 7 + (8 - weekday_seq)%7)
 
 def public_holidays(year):
+    """
+    returns a list of datetime objects that correspond to NSW public holidays
+    :param year: int
+    :return: list of datetime objects
+    """
     year = year if year else _year
-    return [anzac(year), australia(year), *easter(year), newyear(year), christmas(year),
-                       boxing(year), queen(year), labour(year)]
-    
-def ispublic(date_):
+    return [i for i in easter(year)] + [newyear(year), australia(year),anzac(year), queen(year),
+    labour(year), christmas(year), boxing(year)]
+
+def public_holidays_can(year):
+    """
+    returns a list of datetime objects that correspond to NSW public holidays
+    :param year: int
+    :return: list of datetime objects
+    """
+    year = year if year else _year
+    return [i for i in easter(year)] + [newyear(year), australia(year),anzac(year), queen(year),
+    labour(year), christmas(year), boxing(year), family(year), canberra(year)]
+
+
+def is_public(date_):
 
     if type(date_) == datetime.date:
         pass
-    elif type(date_time) == datetime.datetime:
+    elif type(date_) == datetime.datetime:
         date_ = date_.date()
     else:
         date_ = parse(date_)
     year = date_.year
 
     return (date_ in public_holidays(year))
-    
+
+def is_public_can(date_):
+
+    if type(date_) == datetime.date:
+        pass
+    elif type(date_) == datetime.datetime:
+        date_ = date_.date()
+    else:
+        date_ = parse(date_)
+    year = date_.year
+
+    return (date_ in public_holidays_can(year))
+
+
+def is_weekend(date_):
+
+    if type(date_) == datetime.date:
+        pass
+    elif type(date_) == datetime.datetime:
+        date_ = date_.date()
+    else:
+        date_ = parse(date_)
+
+    return (date_.weekday() >=5 )
+
 if __name__ == '__main__':
     # _time_filter('2015-01-03')
     # print(calendar.monthrange(2015, 10))
