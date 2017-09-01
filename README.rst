@@ -11,8 +11,18 @@ Installation
 
     pip install pytimeNSW
 
-Basic Usage
------------
+To Do List
+----------
+
+1. Add family\_day public holiday for Canberra
+2. Add is\_public\_can and public\_holidays\_can functions for Canberra
+3. Add is\_weekend function takes string or datimeTime and returns
+   Boolean
+4. Add 'Monday rollover' for public holidays that land on a weekend
+5. Add days\_until that accepts public holiday name as argument and
+   returns int
+6. Change is\_public to work for python2 list comprehensions ## Basic
+   Usage
 
 .. code:: python
 
