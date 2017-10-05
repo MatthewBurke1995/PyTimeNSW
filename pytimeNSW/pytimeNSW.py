@@ -345,7 +345,7 @@ def labour(year=None):
     """
     the 1st Monday in October
     :param year: int
-    :return: Father's day
+    :return: Labour day
     """
     october_first = datetime.date(_year, 10, 1) if not year else datetime.date(int(year), 10, 1)
     weekday_seq = october_first.weekday()
@@ -390,7 +390,9 @@ def public_holidays_can(year):
 
 
 def is_public(date_):
+    """
 
+    """
     if type(date_) == datetime.date:
         pass
     elif type(date_) == datetime.datetime:
