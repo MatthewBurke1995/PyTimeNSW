@@ -1,6 +1,6 @@
 # PyTimeNSW
 
-PyTimeNSW is a fork of [PyTime](https://github.com/shnode/PyTime) with additional functionality for 
+PyTimeNSW is a fork of [PyTime](https://github.com/shnode/PyTime) with specialized functionality for the NSW and Canberra regions in Australia. 
 
 ## Installation
 ```python
@@ -19,6 +19,7 @@ pip install pytimeNSW
 
 ```python
 >>>from pytimeNSW import pytimeNSW
+>>>#The default value for all functions is the current year
 >>>
 >>>queen = pytimeNSW.queen()           # Queen's Birthday
 >>>print(queen)
@@ -37,14 +38,16 @@ datetime.date(2019, 10, 7)
 
 Other public holidays
 ```python
+
 >>>pytimeNSW.boxing()                      # Boxing Day
-datetime.date(2015, 12, 26)
+datetime.date(2017, 12, 26)
 >>>
->>>pytimekr.anzac()                    # Anzac Day
+>>>pytimeNSW.anzac()                    # Anzac Day
 datetime.date(2017, 4, 25)
 >>>
 >>>pytimeNSW.australia()                # Australia Day
 datetime.date(2017, 1, 26)
+
 >>>pytimeNSW.public_holidays(1995)                # List of public holidays in given year
 [datetime.date(1995, 4, 25),
  datetime.date(1995, 1, 26),
@@ -57,6 +60,7 @@ datetime.date(2017, 1, 26)
  datetime.date(1995, 12, 26),
  datetime.date(1995, 6, 12),
  datetime.date(1995, 10, 2)]
+ 
 >>>pytimeNSW.ispublic('April 25 2015')                # Verifies if a date is a public holiday
 True
 
